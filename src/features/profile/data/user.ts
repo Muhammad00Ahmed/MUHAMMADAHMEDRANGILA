@@ -7,9 +7,10 @@ export const USER: User = {
   username: "Muhammad00Ahmed",
   gender: "male",
   pronouns: "he/him",
-  bio: "AI engineer and full-stack product builder. I build AI agents, business automation, ERP integrations, and production-ready web products.",
+  bio: "Founder and product builder. I build AI agents, business automation, ERP integrations, and production-ready web products.",
   timeZone: "Asia/Karachi",
   flipSentences: [
+    "Founder & Product Builder",
     "AI Engineer",
     "Full-Stack Product Builder",
     "Business Automation Developer",
@@ -22,21 +23,16 @@ export const USER: User = {
   // base64-string-converter)
   email: "bWFobWVkcmFuZ2lsYUBnbWFpbC5jb20=", // base64 encoded
   website: "https://muhammad-ahmed-rangila-portfolio.vercel.app",
-  jobTitle: "AI Engineer & Full-Stack Product Builder",
+  jobTitle: "Founder & Product Builder",
   jobs: [
     {
-      title: "AI Engineer & Full-Stack Product Builder",
+      title: "Founder & Product Builder",
       company: "Independent Product Development",
       website: "https://github.com/Muhammad00Ahmed",
     },
-    {
-      title: "Software Engineering Intern",
-      company: "NETSOL Technologies",
-      website: "https://www.netsoltech.com",
-    },
   ],
   about: `
-- I'm **Muhammad Ahmed Rangila**, an AI engineer and full-stack product builder focused on creating intelligent software for real business problems.
+- I'm **Muhammad Ahmed Rangila**, a founder and product builder focused on creating intelligent software for real business problems.
 - I build **AI agents**, **agentic workflows**, **ERP and business automation**, **SaaS applications**, **dashboards**, and **full-stack web products** — from idea to deployment.
 - I enjoy turning complex workflows into practical systems that are easier to use, automate, and scale. My work combines product thinking, software engineering, AI integration, and user-focused design.
 - My core toolkit is **Python**, **TypeScript**, **Next.js**, **React**, **Node.js**, and **PostgreSQL**, with **OpenAI APIs**, **LangGraph**, and **Supabase** for AI-driven features, and **Docker** for deployment.

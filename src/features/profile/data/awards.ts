@@ -13,16 +13,6 @@ import type { Award } from "../types/awards";
  */
 export const AWARDS: Award[] = [
   {
-    id: "netsol-intern",
-    prize: "Experience",
-    title: "Software Engineering Internship — NETSOL Technologies",
-    date: "2025-07",
-    grade: "Professional",
-    description:
-      "- Completed a software engineering internship at NETSOL Technologies.\n- Built and tested REST APIs and collaborated within an agile team.",
-    // referenceLink: "" // TODO: internship certificate / verification URL
-  },
-  {
     id: "mentor-saylani",
     prize: "Community",
     title: "Mentor & Volunteer — Saylani Welfare",

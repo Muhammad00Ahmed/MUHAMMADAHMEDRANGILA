@@ -8,7 +8,7 @@ export const EXPERIENCES: Experience[] = [
     positions: [
       {
         id: "independent-ai-fullstack",
-        title: "AI Engineer & Full-Stack Product Builder",
+        title: "Founder & Product Builder",
         employmentPeriod: {
           start: "2024",
         },
@@ -32,37 +32,6 @@ export const EXPERIENCES: Experience[] = [
       },
     ],
     isCurrentEmployer: true,
-  },
-  {
-    id: "netsol",
-    companyName: "NETSOL Technologies, Pakistan",
-    companyLogo:
-      "https://ui-avatars.com/api/?name=NETSOL&background=4F46E5&color=fff&size=200",
-    positions: [
-      {
-        id: "netsol-swe-intern",
-        title: "Software Engineering Intern",
-        employmentPeriod: {
-          start: "05.2025",
-          end: "07.2025",
-        },
-        employmentType: "Internship",
-        icon: "code",
-        description: `- Assisted in scalable web app development using React.js and Node.js.
-- Built and tested REST APIs.
-- Collaborated in agile teams and code reviews.
-- Debugged issues and improved stability.`,
-        skills: [
-          "React.js",
-          "Node.js",
-          "REST APIs",
-          "Agile",
-          "Code Reviews",
-          "Debugging",
-        ],
-        isExpanded: true,
-      },
-    ],
   },
   {
     id: "tijara-books",

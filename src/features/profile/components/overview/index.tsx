@@ -16,23 +16,31 @@ import { JobItem } from "./job-item";
 import { PhoneItem } from "./phone-item";
 
 export function Overview() {
+  // Read positionally rather than by index so removing a role from USER.jobs
+  // cannot crash the render (it previously hard-referenced jobs[1]).
+  const [primaryJob, secondaryJob] = USER.jobs;
+
   return (
     <Panel>
       <h2 className="sr-only">Overview</h2>
 
       <PanelContent className="space-y-2.5">
-        <JobItem
-          title={USER.jobs[0].title}
-          company={USER.jobs[0].company}
-          website={USER.jobs[0].website}
-        />
+        {primaryJob && (
+          <JobItem
+            title={primaryJob.title}
+            company={primaryJob.company}
+            website={primaryJob.website}
+          />
+        )}
 
         <div className="grid gap-x-12 gap-y-2.5 sm:grid-cols-2">
-          <JobItem
-            title={USER.jobs[1].title}
-            company={USER.jobs[1].company}
-            website={USER.jobs[1].website}
-          />
+          {secondaryJob && (
+            <JobItem
+              title={secondaryJob.title}
+              company={secondaryJob.company}
+              website={secondaryJob.website}
+            />
+          )}
 
           <IntroItem>
             <IntroItemIcon>
