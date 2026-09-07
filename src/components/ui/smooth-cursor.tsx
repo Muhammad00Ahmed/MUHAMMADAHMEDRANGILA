@@ -90,7 +90,14 @@ export function SmoothCursor({
     restDelta: 0.001,
   },
 }: SmoothCursorProps) {
-  const [isMoving, setIsMoving] = useState(false);
+  // The custom cursor is only appropriate on a precise pointer. On touch there
+  // is no cursor to replace, and honouring reduced-motion means leaving the
+  // native one alone.
+  const [enabled, setEnabled] = useState(false);
+  // Springs start at the origin, so the cursor is held hidden until the pointer
+  // reports a real position instead of parking in the top-left corner.
+  const [located, setLocated] = useState(false);
+
   const lastMousePos = useRef<Position>({ x: 0, y: 0 });
   const velocity = useRef<Position>({ x: 0, y: 0 });
   const lastUpdateTime = useRef(Date.now());
@@ -111,6 +118,32 @@ export function SmoothCursor({
   });
 
   useEffect(() => {
+    const finePointer = window.matchMedia("(pointer: fine)");
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    const sync = () =>
+      setEnabled(finePointer.matches && !reducedMotion.matches);
+    sync();
+
+    finePointer.addEventListener("change", sync);
+    reducedMotion.addEventListener("change", sync);
+
+    return () => {
+      finePointer.removeEventListener("change", sync);
+      reducedMotion.removeEventListener("change", sync);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!enabled) return;
+
+    // Drives the `cursor: none` rule in globals.css. Scoping it to this
+    // attribute keeps the native cursor when the script never runs.
+    document.body.dataset.smoothCursor = "on";
+
+    let rafId = 0;
+    let scaleReset: ReturnType<typeof setTimeout> | undefined;
+
     const updateVelocity = (currentPos: Position) => {
       const currentTime = Date.now();
       const deltaTime = currentTime - lastUpdateTime.current;
@@ -136,6 +169,7 @@ export function SmoothCursor({
 
       cursorX.set(currentPos.x);
       cursorY.set(currentPos.y);
+      setLocated(true);
 
       if (speed > 0.1) {
         const currentAngle =
@@ -150,18 +184,12 @@ export function SmoothCursor({
         previousAngle.current = currentAngle;
 
         scale.set(0.95);
-        setIsMoving(true);
 
-        const timeout = setTimeout(() => {
-          scale.set(1);
-          setIsMoving(false);
-        }, 150);
-
-        return () => clearTimeout(timeout);
+        clearTimeout(scaleReset);
+        scaleReset = setTimeout(() => scale.set(1), 150);
       }
     };
 
-    let rafId: number;
     const throttledMouseMove = (e: MouseEvent) => {
       if (rafId) return;
 
@@ -171,18 +199,21 @@ export function SmoothCursor({
       });
     };
 
-    document.body.style.cursor = "none";
     window.addEventListener("mousemove", throttledMouseMove);
 
     return () => {
       window.removeEventListener("mousemove", throttledMouseMove);
-      document.body.style.cursor = "auto";
+      delete document.body.dataset.smoothCursor;
       if (rafId) cancelAnimationFrame(rafId);
+      clearTimeout(scaleReset);
     };
-  }, [cursorX, cursorY, rotation, scale]);
+  }, [enabled, cursorX, cursorY, rotation, scale]);
+
+  if (!enabled) return null;
 
   return (
     <motion.div
+      aria-hidden
       style={{
         position: "fixed",
         left: cursorX,
@@ -194,6 +225,7 @@ export function SmoothCursor({
         zIndex: 100,
         pointerEvents: "none",
         willChange: "transform",
+        opacity: located ? 1 : 0,
       }}
       initial={{ scale: 0 }}
       animate={{ scale: 1 }}

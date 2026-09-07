@@ -326,7 +326,17 @@
   * {
     scrollbar-width: thin;
     scrollbar-color: var(--border) transparent;
-    cursor: none !important;
+  }
+
+  /* The custom cursor replaces the native one only on precise pointers, and
+     only once SmoothCursor has mounted and set the attribute. Touch devices,
+     reduced-motion users, and no-JS visitors keep the native cursor rather
+     than losing it entirely. */
+  @media (pointer: fine) {
+    body[data-smooth-cursor="on"],
+    body[data-smooth-cursor="on"] * {
+      cursor: none !important;
+    }
   }
 
   [id] {

@@ -4,7 +4,7 @@ import { MonitorIcon, MoonStarIcon, SunIcon } from "lucide-react";
 import { motion } from "motion/react";
 import { useTheme } from "next-themes";
 import type { JSX } from "react";
-import React, { useEffect, useState } from "react";
+import React, { useSyncExternalStore } from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -60,14 +60,19 @@ const THEME_OPTIONS = [
   },
 ];
 
+/** No client-side source of truth to subscribe to; the snapshot never changes. */
+const subscribeToNothing = () => () => {};
+
 function ThemeSwitcher() {
   const { theme, setTheme } = useTheme();
 
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
+  // Rendered only after hydration so the switcher never renders a theme that
+  // disagrees with the one the inline script already applied.
+  const isMounted = useSyncExternalStore(
+    subscribeToNothing,
+    () => true,
+    () => false
+  );
 
   if (!isMounted) {
     return <div className="flex h-8 w-24" />;

@@ -43,7 +43,9 @@ export const USER: User = {
 - I started programming young and have been building ever since — always learning, always shipping.
 `,
   avatar: "/images/me.jpg",
-  ogImage: "/images/og-image-light.png",
+  // Rendered on demand by src/app/og/simple/route.tsx. Kept dynamic so the
+  // card can never drift out of sync with a stale committed screenshot.
+  ogImage: "/og/simple?title=Muhammad%20Ahmed%20Rangila",
   namePronunciationUrl: "",
   keywords: [
     "muhammad ahmed rangila",

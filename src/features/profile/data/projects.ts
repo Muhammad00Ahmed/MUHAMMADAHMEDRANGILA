@@ -1,4 +1,7 @@
-import type { Project } from "../types/projects";
+import { CASE_STUDIES } from "@/features/projects/data/case-studies";
+import type { CaseStudyStatus } from "@/features/projects/types/case-study";
+
+import type { Project, ProjectStatus } from "../types/projects";
 
 /**
  * PROJECTS
@@ -9,75 +12,37 @@ import type { Project } from "../types/projects";
  *  - "Case Study" renders only when `caseStudy` is a non-empty path.
  *  - When none exist, the card shows a "Private Project" badge and no links.
  *
- * TODO(muhammad): For each project you own publicly, paste the REAL values:
- *   link:      "https://your-live-demo.com"      (public demo, else leave "")
- *   repo:      "https://github.com/you/repo"      (specific repo, else leave "")
- *   caseStudy: "/products/your-slug"              (only if a full page exists)
- *   logo:      "/images/projects/<file>.png"      (real screenshot/logo)
- * Do NOT point `repo` at your generic profile — leave it "" instead.
+ * The nine product entries are derived from CASE_STUDIES so this list, the
+ * /projects library, the /products catalogue and /projects.md can never drift
+ * apart. Edit the product content in src/features/projects/data/case-studies.ts.
  */
-export const PROJECTS: Project[] = [
-  {
-    id: "ai-erp-copilot",
-    title: "AI ERP Copilot",
-    period: { start: "2026" },
-    status: "in-development",
-    featured: true,
-    link: "", // TODO: real live demo URL, or leave "" to hide the button
-    repo: "", // TODO: real repository URL, or leave "" (Private Project)
-    caseStudy: "",
-    skills: ["AI Agents", "LangGraph", "Next.js", "Node.js", "PostgreSQL"],
-    isExpanded: true,
-    description: `An AI copilot layered on top of ERP systems to automate operations through natural language.
-- Agentic workflows for invoices, inventory, and reporting
-- Natural-language querying over business data
-- Multi-agent orchestration with a full-stack dashboard`,
-  },
-  {
-    id: "acos-accounting-platform",
-    title: "ACOS Accounting Platform",
-    period: { start: "2026" },
-    status: "in-development",
-    featured: true,
-    link: "",
-    repo: "",
-    caseStudy: "",
-    skills: ["Next.js", "Node.js", "PostgreSQL", "AI Automation"],
-    description: `An AI-assisted accounting platform that automates bookkeeping and financial workflows.
-- Automated invoice, expense, and ledger processing
-- AI-assisted categorization and reconciliation
-- Real-time financial dashboards and reporting`,
-  },
-  {
-    id: "psx-ai-market-intelligence",
-    title: "PSX AI Market Intelligence Platform",
-    period: { start: "2026" },
-    status: "in-development",
-    featured: true,
-    link: "",
-    repo: "",
-    caseStudy: "",
-    skills: ["Python", "Machine Learning", "RAG", "Next.js", "Vector Databases"],
-    description: `An AI market-intelligence platform for the Pakistan Stock Exchange (PSX).
-- RAG over financial filings, news, and market data
-- ML-driven signals and trend analysis
-- Conversational interface for market research`,
-  },
-  {
-    id: "multi-agent-ai-assistant",
-    title: "Multi-Agent AI Assistant",
-    period: { start: "2026" },
-    status: "in-development",
-    featured: true,
-    link: "",
-    repo: "",
-    caseStudy: "",
-    skills: ["CrewAI", "LangGraph", "LLMs", "Node.js", "Agentic Workflows"],
-    description: `A multi-agent assistant that coordinates specialized agents to complete complex tasks.
-- Orchestrated agents for research, planning, and execution
-- Tool-using agents with memory and shared context
-- Built on agentic workflow frameworks`,
-  },
+
+const STATUS_FROM_CASE_STUDY: Record<CaseStudyStatus, ProjectStatus> = {
+  live: "live",
+  "in-development": "in-development",
+  beta: "beta",
+  prototype: "prototype",
+  research: "research",
+};
+
+const PRODUCT_PROJECTS: Project[] = CASE_STUDIES.map((study) => ({
+  id: study.slug,
+  title: study.name,
+  period: { start: study.since },
+  status: STATUS_FROM_CASE_STUDY[study.status],
+  featured: study.featured,
+  link: "",
+  repo: "",
+  caseStudy: `/projects#${study.slug}`,
+  skills: study.stack.slice(0, 5),
+  description: `${study.tagline}\n\n${study.summary}`,
+}));
+
+/**
+ * Earlier work that is not part of the product line. ShopFlow leads because it
+ * is the only entry with a public live demo and its own product page.
+ */
+const OTHER_PROJECTS: Project[] = [
   {
     id: "shopflow",
     title: "ShopFlow",
@@ -89,6 +54,20 @@ export const PROJECTS: Project[] = [
     caseStudy: "/products/shopflow", // full product page exists in this repo
     skills: ["Next.js", "TypeScript", "Node.js", "PostgreSQL", "AI"],
     description: `An AI-assisted commerce operations product. Read the full case study for the problem, workflow, architecture, and lessons learned.`,
+  },
+  {
+    id: "multi-agent-ai-assistant",
+    title: "Multi-Agent AI Assistant",
+    period: { start: "2026" },
+    status: "in-development",
+    link: "",
+    repo: "",
+    caseStudy: "",
+    skills: ["CrewAI", "LangGraph", "LLMs", "Node.js", "Agentic Workflows"],
+    description: `A multi-agent assistant that coordinates specialized agents to complete complex tasks.
+- Orchestrated agents for research, planning, and execution
+- Tool-using agents with memory and shared context
+- Built on agentic workflow frameworks`,
   },
   {
     id: "ai-resume-analyzer",
@@ -151,4 +130,10 @@ export const PROJECTS: Project[] = [
 - Email automation and API integrations
 - AI-assisted document and data processing`,
   },
+];
+
+export const PROJECTS: Project[] = [
+  OTHER_PROJECTS[0], // ShopFlow — the only entry with a public live demo
+  ...PRODUCT_PROJECTS,
+  ...OTHER_PROJECTS.slice(1),
 ];

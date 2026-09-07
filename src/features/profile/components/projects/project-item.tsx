@@ -27,6 +27,9 @@ import type { Project, ProjectStatus } from "../../types/projects";
 const STATUS_LABEL: Record<ProjectStatus, string> = {
   "in-development": "In Development",
   live: "Live",
+  beta: "Beta",
+  prototype: "Prototype",
+  research: "Research",
   completed: "Completed",
   private: "Private Project",
 };
@@ -60,7 +63,7 @@ export function ProjectItem({
               width={32}
               height={32}
               quality={100}
-              className="mx-4 flex size-6 shrink-0 select-none rounded"
+              className="mx-4 flex size-6 shrink-0 rounded select-none"
               aria-hidden="true"
             />
           ) : (

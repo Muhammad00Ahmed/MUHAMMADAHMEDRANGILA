@@ -1,6 +1,9 @@
 export type ProjectStatus =
   | "in-development"
   | "live"
+  | "beta"
+  | "prototype"
+  | "research"
   | "completed"
   | "private";
 

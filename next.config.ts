@@ -17,7 +17,11 @@ const nextConfig: NextConfig = {
         port: "",
       },
       { protocol: "https", hostname: "cdn.jsdelivr.net", port: "" },
-      { protocol: "https", hostname: "avatars.githubusercontent.com", port: "" },
+      {
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com",
+        port: "",
+      },
       { protocol: "https", hostname: "huggingface.co", port: "" },
       { protocol: "https", hostname: "www.gstatic.com", port: "" },
       { protocol: "https", hostname: "ui.shadcn.com", port: "" },

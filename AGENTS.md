@@ -6,7 +6,7 @@ This guide provides essential information for AI agents working with the https:/
 
 **https://muhammadahmedrangila.vercel.app** is a minimal, pixel-perfect dev portfolio, component registry, and blog built with modern web technologies. It serves as:
 
-- Personal portfolio for Nguyen Chanh Dai (@ncdai)
+- Personal portfolio for Muhammad Ahmed Rangila (@Muhammad00Ahmed)
 - Component registry using shadcn/ui system
 - Blog with MDX content
 - Showcase for custom React components
@@ -25,7 +25,7 @@ This guide provides essential information for AI agents working with the https:/
 
 ### Tech Stack
 
-- **Framework**: Next.js 15 (App Router)
+- **Framework**: Next.js 16 (App Router)
 - **Styling**: Tailwind CSS v4
 - **UI Components**: shadcn/ui + custom components
 - **Package Manager**: pnpm
@@ -187,12 +187,21 @@ When writing code for this project, follow these principles:
 
 - `user.ts` - Core personal information, bio, contact details, job history
 - `experiences.ts` - Detailed work experience, education, company information
-- `projects.ts` - Portfolio projects with descriptions, links, skills, logos
+- `projects.ts` - Homepage project list with descriptions, links, skills, logos
 - `tech-stack.ts` - Technology stack, programming languages, tools, frameworks
 - `awards.ts` - Competition awards, prizes, academic achievements, certificates
 - `certifications.ts` - Professional certifications, course completions, credentials
 - `social-links.ts` - Social media profiles, professional networks, contact links
 - `testimonials.ts` - Professional recommendations, endorsements from colleagues and clients
+
+**Project Library** (`src/features/projects/`):
+
+- `data/case-studies.ts` - Full product case studies rendered at `/projects`
+  (problem, solution, features, stack, platforms, business impact). This is the
+  single source of truth for that page and for `/projects.md`.
+- Honesty rules: `impact` holds qualitative outcome statements only. Backtested,
+  self-measured or unvalidated figures must be labelled in `note` rather than
+  stated as fact, and research prototypes must say so in `note`.
 
 ## Environment & Configuration
 

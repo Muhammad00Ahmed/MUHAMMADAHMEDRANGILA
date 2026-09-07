@@ -21,15 +21,15 @@ export default function manifest(): MetadataRoute.Manifest {
     scope: "/",
     screenshots: [
       {
-        src: "/images/screenshots/screenshot-desktop-light.png",
-        type: "image/webp",
-        sizes: "440x956",
+        src: "/images/screenshots/screenshot-mobile-light.png",
+        type: "image/png",
+        sizes: "371x802",
         form_factor: "narrow",
       },
       {
-        src: "/images/screenshots/screenshot-mobile-light.png",
-        type: "image/webp",
-        sizes: "440x956",
+        src: "/images/screenshots/screenshot-mobile-dark.png",
+        type: "image/png",
+        sizes: "366x800",
         form_factor: "narrow",
       },
       {

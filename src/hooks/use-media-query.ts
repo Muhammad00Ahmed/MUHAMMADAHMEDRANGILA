@@ -1,28 +1,20 @@
-import { useEffect, useState } from "react";
+import { useCallback, useSyncExternalStore } from "react";
 
+/**
+ * Tracks a CSS media query. Returns false during server render and on the
+ * hydration pass, then the real match once mounted.
+ */
 export function useMediaQuery(query: string) {
-  const [value, setValue] = useState(false);
+  const subscribe = useCallback(
+    (onStoreChange: () => void) => {
+      const result = matchMedia(query);
+      result.addEventListener("change", onStoreChange);
+      return () => result.removeEventListener("change", onStoreChange);
+    },
+    [query]
+  );
 
-  useEffect(() => {
-    const abortController = new AbortController();
-    const { signal } = abortController;
+  const getSnapshot = useCallback(() => matchMedia(query).matches, [query]);
 
-    const result = matchMedia(query);
-
-    result.addEventListener(
-      "change",
-      (event: MediaQueryListEvent) => {
-        setValue(event.matches);
-      },
-      { signal }
-    );
-
-    setValue(result.matches);
-
-    return () => {
-      abortController.abort();
-    };
-  }, [query]);
-
-  return value;
+  return useSyncExternalStore(subscribe, getSnapshot, () => false);
 }

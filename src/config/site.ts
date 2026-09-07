@@ -27,12 +27,16 @@ export const MAIN_NAV: NavItem[] = [
     href: "/",
   },
   {
+    title: "Projects",
+    href: "/projects",
+  },
+  {
     title: "Blog",
     href: "/blog",
   },
   {
     title: "Products",
-    href: "/products/shopflow",
+    href: "/products",
   },
   // {
   //   title: "Components",
